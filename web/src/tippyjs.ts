@@ -579,6 +579,24 @@ export function initialize(): void {
     });
 
     delegate("body", {
+        target: ".header-main .column-left .left-sidebar-toggle-button",
+        delay: LONG_HOVER_DELAY,
+        placement: "bottom",
+        appendTo: () => document.body,
+        onShow(instance) {
+            let template = "show-left-sidebar-tooltip-template";
+            if ($("#left-sidebar-container").is(":visible")) {
+                template = "hide-left-sidebar-tooltip-template";
+            }
+            $(instance.reference).attr("data-tooltip-template-id", template);
+            instance.setContent(get_tooltip_content(instance.reference));
+        },
+        onHidden(instance) {
+            instance.destroy();
+        },
+    });
+
+    delegate("body", {
         target: "#userlist-toggle",
         delay: LONG_HOVER_DELAY,
         placement: "bottom",
